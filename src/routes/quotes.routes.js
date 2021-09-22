@@ -9,7 +9,11 @@ const {
     checkExistingAuthor
 } = require('../middlewares/authors.midd');
 
+const {
+    checkRegistration
+} = require('../middlewares/quotes.midd')
+
 // CRUD quotes
-app.post('/quotes', checkExistingAuthor, createQuote);
+app.post('/quotes', checkRegistration, checkExistingAuthor, createQuote);
 
 module.exports = app;
