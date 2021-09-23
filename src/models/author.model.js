@@ -1,4 +1,5 @@
 const { Sequelize } = require('sequelize');
+const { Quote } = require('./quote.model');
 const db = require('../db/db.connection');
 
 const Author = db.define('author', {
@@ -24,5 +25,8 @@ const Author = db.define('author', {
     // If don't want updatedAt
     updatedAt: false,
 });
+
+Author.hasMany(Quote, { as: 'Quotes', foreignKey: 'id_author'});
+Quote.belongsTo(Author, {foreignKey: 'id_author'});
 
 module.exports = { Author }

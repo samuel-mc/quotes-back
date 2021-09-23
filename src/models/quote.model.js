@@ -1,4 +1,5 @@
 const { Sequelize } = require('sequelize');
+// const { Author } = require('./author.model');
 const db = require('../db/db.connection');
 
 const Quote = db.define('quote', {
@@ -11,14 +12,6 @@ const Quote = db.define('quote', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    id_author: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        references: {
-            model: 'authors',
-            key: 'id_author'
-        }
-    }
 },{
     // don't add the timestamp attributes (updatedAt, createdAt)
     timestamps: false,
@@ -27,5 +20,8 @@ const Quote = db.define('quote', {
     // If don't want updatedAt
     updatedAt: false,
 });
+
+// Author.hasMany(Quote);
+// Quote.belongsTo(Author);
 
 module.exports = { Quote }

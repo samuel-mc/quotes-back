@@ -21,10 +21,31 @@ const createQuote = async (req, res) => {
         
         res.status(201).json({ 'message': 'Quote agregada con exito.' });
     } catch (error) {
-        res.status(400).json({ "message": "Error: " + error.message});
+        res.status(400).json({ "message": "Error creating the quote: " + error.message});
     }
 }
 
+const readQuotes = async (req, res) => {
+    try {
+        const quotes = await QuoteService.getAllQuotes();
+        res.status(200).json({ 'quotes': quotes });
+    } catch (error) {
+        res.status(400).json({ "message": "Error reading the quotes: " + error.message});
+    }
+}
+
+const getRandomQuote= async (req, res) => {
+    try {
+        const quote = await QuoteService.getRandomQuote();
+        res.status(200).json(quote);
+    } catch (error) {
+        res.status(400).json({ "message": "Error reading the quotes: " + error.message});
+    }
+}
+
+
 module.exports = {
-    createQuote
+    createQuote,
+    readQuotes,
+    getRandomQuote,
 }

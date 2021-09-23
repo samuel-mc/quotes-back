@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 
 const {
-    createQuote
+    createQuote,
+    readQuotes,
+    getRandomQuote
 } = require('../controllers/quotes.controllers');
 
 const {
@@ -13,7 +15,9 @@ const {
     checkRegistration
 } = require('../middlewares/quotes.midd')
 
-// CRUD quotes
-app.post('/quotes', checkRegistration, checkExistingAuthor, createQuote);
+// Routes
+app.post('/quotes', checkRegistration, checkExistingAuthor, createQuote); //Postea de una frase si los campos son correctos
+app.get('/quotes', readQuotes) // Obtiene todas las frases que hay en nuestro sistema.
+app.get('/quote', getRandomQuote); // Obtiene una frase aleatoria.
 
 module.exports = app;

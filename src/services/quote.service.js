@@ -1,4 +1,5 @@
 const { Quote } = require('../models/quote.model');
+const { Author } = require('../models/author.model');
 
 class QuoteService {
     constructor (id_quote){
@@ -14,6 +15,30 @@ class QuoteService {
             });
         } catch (error) {
             throw new Error(err);
+        }
+    }
+
+    static async getAllQuotes() {
+        try {
+            const quotes = await Quote.findAll({
+                include: { model: Author },
+                attributes: {
+                    exclude: ['id_author']
+                },
+            });
+            return quotes;
+        } catch (error) {
+            throw new Error(err);
+        }
+    }
+
+    static async getRandomQuote() {
+        try {
+            const quotes = await QuoteService.getAllQuotes();
+            const index = Math.floor(Math.random() * (quotes.length));
+            return quotes[index];
+        } catch (error) {
+            throw new Error(error);
         }
     }
 }
