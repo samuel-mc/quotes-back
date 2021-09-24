@@ -39,13 +39,50 @@ const getRandomQuote= async (req, res) => {
         const quote = await QuoteService.getRandomQuote();
         res.status(200).json(quote);
     } catch (error) {
-        res.status(400).json({ "message": "Error reading the quotes: " + error.message});
+        res.status(400).json({ "message": "Error reading the quote: " + error.message});
     }
 }
 
+const getOneQuote = async (req, res) => {
+    const id_quote = req.params.id;
+    let quote =  new QuoteService(id_quote);
+    try {
+        quote = await quote.getByID();
+        !quote
+            ? res.status(404).json({ "message": "Error, quote not found" })
+            : res.status(200).json(quote);
+    } catch (error) {
+        res.status(400).json({ "message": "Error reading the quote: " + error.message});
+    }
+}
+
+const getQuotesByAuthor = async (req, res) => {
+    const id_author = req.params.id;
+    try {
+        const quotes = await QuoteService.getQuotesByAuthorId(id_author);
+        !quotes
+            ? res.status(404).json({ "message": "Error: quotes not found" })
+            : res.status(200).json(quotes);
+    } catch (error) {
+        res.status(400).json({ "message": "Error reading the quote: " + error.message});
+    }
+}
+
+const deleteQuote = async (req, res) => {
+    // let quote = new QuoteService(req.params.id);
+    try {
+        // await quote.removeQuote();
+        res.status(200).json({ "message": "Quote deleted successfully"});
+    } catch (error) {
+        res.status(400).json({ "message": "Error deleting the quote: " + error.message });
+    }
+}
 
 module.exports = {
     createQuote,
     readQuotes,
     getRandomQuote,
+    getOneQuote,
+    getQuotesByAuthor,
+    deleteQuote
 }

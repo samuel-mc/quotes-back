@@ -19,3 +19,4 @@ app.listen(process.env.PORT, async () => {
 })
 
 app.use( require('./routes/quotes.routes'));
+app.use( require('./routes/author.routes'));

@@ -15,7 +15,24 @@ class AuthorService {
                 last_name: last_name.toUpperCase(),
             });
         } catch (error) {
-            throw new Error(err);
+            throw new Error(error);
+        }
+    }
+    static getAllAuthors() {
+        try {
+            const authors = Author.findAll({});
+            return authors;
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    static findById(id_author) {
+        try {
+            const author = Author.findOne({ where: { id_author }});
+            return author;
+        } catch (error) {
+            throw new Error(error);
         }
     }
 

@@ -14,7 +14,7 @@ class QuoteService {
                 id_author
             });
         } catch (error) {
-            throw new Error(err);
+            throw new Error(error);
         }
     }
 
@@ -28,7 +28,7 @@ class QuoteService {
             });
             return quotes;
         } catch (error) {
-            throw new Error(err);
+            throw new Error(error);
         }
     }
 
@@ -37,6 +37,44 @@ class QuoteService {
             const quotes = await QuoteService.getAllQuotes();
             const index = Math.floor(Math.random() * (quotes.length));
             return quotes[index];
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    getByID() {
+        try {
+            const quote = Quote.findOne({
+                where: { id_quote: this.id_quote },
+                include: { model: Author },
+                attributes: {
+                    exclude: ['id_author']
+                },
+            });
+            return quote;
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    static getQuotesByAuthorId(id_author) {
+        try {
+            const quotes = Quote.findAll({
+                where: { id_author },
+                include: { model: Author },
+                attributes: {
+                    exclude: ['id_author']
+                },
+            });
+            return quotes;
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    removeQuote () {
+        try {
+            Quote.destroy({ where: { id_quote: this.id_quote }});
         } catch (error) {
             throw new Error(error);
         }
