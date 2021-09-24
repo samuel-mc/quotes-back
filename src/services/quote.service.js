@@ -72,6 +72,14 @@ class QuoteService {
         }
     }
 
+    updateQuote(quote, id_author) {
+        try {
+            Quote.update({ quote, id_author},{ where: { id_quote: this.id_quote }});
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
     removeQuote () {
         try {
             Quote.destroy({ where: { id_quote: this.id_quote }});

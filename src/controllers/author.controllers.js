@@ -21,7 +21,20 @@ const getOneAuthor = async (req, res) => {
     }
 }
 
+const putAuthor = async (req, res) => {
+    const id_author = req.params.id;
+    const { name, last_name } = req.body;
+    try {
+        const author = new AuthorService(id_author);
+        await author.updateAuthor(name.toUpperCase(), last_name.toUpperCase());
+        res.status(200).json({ "message": "Author updated successfully" });
+    } catch (error) {
+        res.status(400).json({ "message": "Error updating author: " + error.message})
+    }
+}
+
 module.exports = {
     getAuthors,
-    getOneAuthor
+    getOneAuthor,
+    putAuthor
 }

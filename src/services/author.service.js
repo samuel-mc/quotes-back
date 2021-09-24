@@ -36,6 +36,14 @@ class AuthorService {
         }
     }
 
+    updateAuthor(name, last_name) {
+        try {
+            Author.update({name, last_name}, { where: { id_author: this.id_author}});
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
     //Verifica si el author ya existe en la base de datos
     static async exists  (name, last_name) {
         name = name.toUpperCase();

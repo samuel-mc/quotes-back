@@ -5,20 +5,20 @@ const { v4: uuidv4 } = require('uuid');
 
 
 const createQuote = async (req, res) => {
-    const { name, last_name, quote } = req.body; //Recibe estos datos del body
+    const { quote } = req.body; //Recibe estos datos del body
     let id_author = req.id_author; // Recibe estos datos de un middlware
     try {
         // Creamos un autor si no existe en la base de datos
         if (!id_author) {
             id_author = uuidv4(); // Al autor le asigna un identificador unico.
             const author = new AuthorService(id_author);
-            await author.addAuthor(name, last_name);
+            await author.addAuthor(req.body.name, req.body.last_name);
         }
 
         const id_quote = uuidv4(); // A la cita asigna un identificador unico.
         const quoteInstance = new QuoteService(id_quote);
         await quoteInstance.addQuote(quote, id_author);
-        
+
         res.status(201).json({ 'message': 'Quote agregada con exito.' });
     } catch (error) {
         res.status(400).json({ "message": "Error creating the quote: " + error.message});
@@ -44,8 +44,7 @@ const getRandomQuote= async (req, res) => {
 }
 
 const getOneQuote = async (req, res) => {
-    const id_quote = req.params.id;
-    let quote =  new QuoteService(id_quote);
+    let quote =  new QuoteService(req.params.id);
     try {
         quote = await quote.getByID();
         !quote
@@ -68,10 +67,28 @@ const getQuotesByAuthor = async (req, res) => {
     }
 }
 
-const deleteQuote = async (req, res) => {
-    // let quote = new QuoteService(req.params.id);
+const postQuote = async (req, res) => {
+    const { quote } = req.body; //Recibe estos datos del body
+    let id_author = req.id_author;
     try {
-        // await quote.removeQuote();
+        if(!id_author) {
+            id_author = uuidv4();
+            const author = new AuthorService(id_author);
+            await author.addAuthor(req.body.name, req.body.last_name);
+        }
+        let quoteInstance = new QuoteService(req.params.id);
+        await quoteInstance.updateQuote(quote, id_author);
+        res.status(200).json({ "message": "Quote updated successfully."});
+    } catch (error) {
+        res.status(500).json({ "message": "Error updating quote." });
+    }
+
+}
+
+const deleteQuote = async (req, res) => {
+    let quote = new QuoteService(req.params.id);
+    try {
+        await quote.removeQuote();
         res.status(200).json({ "message": "Quote deleted successfully"});
     } catch (error) {
         res.status(400).json({ "message": "Error deleting the quote: " + error.message });
@@ -84,5 +101,6 @@ module.exports = {
     getRandomQuote,
     getOneQuote,
     getQuotesByAuthor,
+    postQuote,
     deleteQuote
 }
