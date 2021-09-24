@@ -21,7 +21,7 @@ app.listen(app.get('port'), async () => {
 })
 
 app.get('/', (req, res) => {
-    res.json(process.env.DB_HOST);
+    res.json('.l.');
 })
 
 app.use( require('./routes/quotes.routes'));
