@@ -21,8 +21,7 @@ app.listen(app.get('port'), async () => {
 })
 
 app.get('/', (req, res) => {
-    const x = process.env.PORT;
-    res.json(x);
+    res.redirect('/quotes');
 })
 
 app.use( require('./routes/quotes.routes'));
