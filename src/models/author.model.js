@@ -15,8 +15,11 @@ const Author = db.define('author', {
     last_name: {
         type: Sequelize.STRING,
         allowNull: false
+    },
+    likes: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
     }
-
 },{
     // don't add the timestamp attributes (updatedAt, createdAt)
     timestamps: false,

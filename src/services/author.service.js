@@ -13,6 +13,7 @@ class AuthorService {
                 id_author: this.id_author,
                 name: name.toUpperCase(),
                 last_name: last_name.toUpperCase(),
+                likes: 0
             });
         } catch (error) {
             throw new Error(error);

@@ -11,7 +11,8 @@ class QuoteService {
             Quote.create({
                 id_quote: this.id_quote,
                 quote,
-                id_author
+                id_author,
+                likes: 0
             });
         } catch (error) {
             throw new Error(error);
