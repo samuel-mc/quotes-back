@@ -73,6 +73,22 @@ class QuoteService {
         }
     }
 
+    incrementLikes(){
+        try {
+            Quote.increment('likes', { where: { id_quote: this.id_quote } });
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    decrementLikes(){
+        try {
+            Quote.decrement('likes', { where: { id_quote: this.id_quote } });
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
     updateQuote(quote, id_author) {
         try {
             Quote.update({ quote, id_author},{ where: { id_quote: this.id_quote }});

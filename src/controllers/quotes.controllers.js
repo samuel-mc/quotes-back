@@ -85,6 +85,30 @@ const postQuote = async (req, res) => {
 
 }
 
+const likeQuote = async ( req, res ) => {
+    const quote = new QuoteService(req.params.id_quote);
+    const author = new AuthorService(req.params.id_author);
+    try {
+        quote.incrementLikes();
+        author.incrementLikes();
+        res.status(200).json({ "message": "Quote updated successfully."});
+    } catch (error) {
+        res.status(500).json({ "message": "Error updating quote." });
+    }
+}
+
+const dislikeQuote = async ( req, res ) => {
+    const quote = new QuoteService(req.params.id_quote);
+    const author = new AuthorService(req.params.id_author);
+    try {
+        quote.decrementLikes();
+        author.decrementLikes();
+        res.status(200).json({ "message": "Quote updated successfully."});
+    } catch (error) {
+        res.status(500).json({ "message": "Error updating quote." });
+    }
+}
+
 const deleteQuote = async (req, res) => {
     let quote = new QuoteService(req.params.id);
     try {
@@ -102,5 +126,7 @@ module.exports = {
     getOneQuote,
     getQuotesByAuthor,
     postQuote,
+    likeQuote,
+    dislikeQuote,
     deleteQuote
 }

@@ -45,6 +45,22 @@ class AuthorService {
         }
     }
 
+    incrementLikes(){
+        try {
+            Author.increment('likes', { where: { id_author: this.id_author } });
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    decrementLikes(){
+        try {
+            Author.decrement('likes', { where: { id_author: this.id_author } });
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
     //Verifica si el author ya existe en la base de datos
     static async exists  (name, last_name) {
         name = name.toUpperCase();
