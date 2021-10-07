@@ -21,7 +21,11 @@ class AuthorService {
     }
     static getAllAuthors() {
         try {
-            const authors = Author.findAll({});
+            const authors = Author.findAll({
+                order: [
+                    ['likes', 'DESC'],
+                ]
+            });
             return authors;
         } catch (error) {
             throw new Error(error);

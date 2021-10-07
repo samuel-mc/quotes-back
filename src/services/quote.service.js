@@ -26,6 +26,9 @@ class QuoteService {
                 attributes: {
                     exclude: ['id_author']
                 },
+                order: [
+                    ['likes', 'DESC'],
+                ]
             });
             return quotes;
         } catch (error) {
